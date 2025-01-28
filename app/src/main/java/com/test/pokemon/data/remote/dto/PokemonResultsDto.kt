@@ -1,4 +1,6 @@
-package com.test.pokemon.data.remote
+package com.test.pokemon.data.remote.dto
+
+import com.test.pokemon.data.remote.PokemonDto
 
 data class PokemonResultsDto(
     val count: Int,

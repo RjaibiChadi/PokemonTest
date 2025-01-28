@@ -8,10 +8,11 @@ import androidx.room.Room
 import com.test.pokemon.data.local.PokemonDatabase
 import com.test.pokemon.data.local.PokemonEntity
 import com.test.pokemon.data.remote.PokemonApi
-import com.test.pokemon.data.remote.PokemonRemoteMediator
-import com.test.pokemon.domain.Pokemon
-import com.test.pokemon.utils.Constants.BASE_URL
-import com.test.pokemon.utils.Constants.DATABASE_NAME
+import com.test.pokemon.data.repository.PokemonRemoteMediator
+import com.test.pokemon.common.Constants.BASE_URL
+import com.test.pokemon.common.Constants.DATABASE_NAME
+import com.test.pokemon.data.repository.PokemonRepositoryImpl
+import com.test.pokemon.domain.repository.PokemonRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,5 +63,11 @@ object AppModule {
                 pokemonDb.dao.pagingSource()
             }
         )
+    }
+
+    @Provides
+    @Singleton
+    fun providePokemonRepository(api: PokemonApi): PokemonRepository {
+        return PokemonRepositoryImpl(api)
     }
 }

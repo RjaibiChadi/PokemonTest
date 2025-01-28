@@ -1,8 +1,7 @@
 @file:OptIn(ExperimentalPagingApi::class)
 
-package com.test.pokemon.data.remote
+package com.test.pokemon.data.repository
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -11,6 +10,7 @@ import androidx.room.withTransaction
 import com.test.pokemon.data.local.PokemonDatabase
 import com.test.pokemon.data.local.PokemonEntity
 import com.test.pokemon.data.mapper.toPokemonEntity
+import com.test.pokemon.data.remote.PokemonApi
 import kotlinx.coroutines.time.delay
 import retrofit2.HttpException
 import java.io.IOException

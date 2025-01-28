@@ -1,4 +1,4 @@
-package com.test.pokemon.presentation
+package com.test.pokemon.presentation.pokemonlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
