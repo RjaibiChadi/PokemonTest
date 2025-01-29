@@ -17,6 +17,7 @@ import java.io.IOException
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.toJavaDuration
 
+// A RemoteMediator to fetch Pokémon data from an API and store it in a local database
 class PokemonRemoteMediator(
     private val pokemonDb: PokemonDatabase,
     private val pokemonApi: PokemonApi
@@ -28,23 +29,26 @@ class PokemonRemoteMediator(
     ): MediatorResult {
 
         return try {
+            // Determine the offset based on the load type
             val offset = when (loadType) {
-                LoadType.REFRESH -> 0
-                LoadType.PREPEND -> return MediatorResult.Success(
-                    endOfPaginationReached = true
-                )
+                LoadType.REFRESH -> 0 // When refreshing, start from the first page
+                LoadType.PREPEND ->
+                    // If we are prepending (trying to load before the first item), there's nothing to load
+                    return MediatorResult.Success(endOfPaginationReached = true)
 
                 LoadType.APPEND -> {
+                    // When appending (loading next page), get the last item in the list
                     val lastItem = state.lastItemOrNull()
                     lastItem?.id ?: return MediatorResult.Success(endOfPaginationReached = true)
                 }
             }
             delay(delayTime.toJavaDuration())
-
+            // Fetch Pokémon data from the API
             val pokemons = pokemonApi.getPokemons(
                 offset = offset,
                 limit = state.config.pageSize
             )
+            // Perform database operations inside a transaction
             pokemonDb.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     pokemonDb.dao.clearAll()
@@ -52,7 +56,7 @@ class PokemonRemoteMediator(
                 val pokemonEntities = pokemons.results.map { it.toPokemonEntity() }
                 pokemonDb.dao.upsertAll(pokemonEntities)
             }
-
+            // Return a success result, specifying whether we reached the end of the pagination
             MediatorResult.Success(
                 endOfPaginationReached = pokemons.results.isEmpty()
             )

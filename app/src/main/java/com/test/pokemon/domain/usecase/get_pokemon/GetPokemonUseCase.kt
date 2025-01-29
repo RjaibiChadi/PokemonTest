@@ -1,9 +1,7 @@
 package com.test.pokemon.domain.usecase.get_pokemon
 
-import android.util.Log
 import com.test.pokemon.common.Resource
 import com.test.pokemon.data.mapper.toPokemonDetail
-import com.test.pokemon.data.remote.dto.PokemonDetailDto
 import com.test.pokemon.domain.model.PokemonDetail
 import com.test.pokemon.domain.repository.PokemonRepository
 import kotlinx.coroutines.flow.Flow
