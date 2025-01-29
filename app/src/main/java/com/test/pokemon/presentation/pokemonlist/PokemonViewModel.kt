@@ -23,3 +23,4 @@ class PokemonViewModel @Inject constructor(
         }
         .cachedIn(viewModelScope)
 }
+

@@ -23,7 +23,10 @@ import retrofit2.HttpException
 @OptIn(ExperimentalPagingApi::class)
 class PokemonRemoteMediatorTest {
 
+    // Instance of the class to be tested
     private lateinit var pokemonRemoteMediator: PokemonRemoteMediator
+
+    // Mocked dependencies for API and Database
     private val mockApi = mock<PokemonApi>()
     private val mockDb = mock<PokemonDatabase>()
 
@@ -31,6 +34,7 @@ class PokemonRemoteMediatorTest {
     @Before
     fun setup() {
 
+        // Initialize the RemoteMediator with mocked dependencies
         pokemonRemoteMediator = PokemonRemoteMediator(
             pokemonApi = mockApi,
             pokemonDb = mockDb
@@ -50,20 +54,21 @@ class PokemonRemoteMediatorTest {
             leadingPlaceholderCount = 0
         )
 
-        // Execute
+        // Execute the load function with PREPEND type (indicating a request for older data)
         val result = pokemonRemoteMediator.load(LoadType.PREPEND, pagingState)
 
         // Verify
         verify(mockApi, never()).getPokemons(any(), any())
 
-        // Assert
+        // Assert that the result indicates the end of pagination
         assert(result is RemoteMediator.MediatorResult.Success)
         assertEquals(true, (result as RemoteMediator.MediatorResult.Success).endOfPaginationReached)
     }
 
     @Test
     fun `load - http error`() = runBlocking {
-        // Mock API error
+
+        // Mock an API error by making the API call throw an HttpException
         val exception = mock<HttpException>()
         `when`(mockApi.getPokemons(any(), any())).thenThrow(exception)
 
@@ -78,10 +83,10 @@ class PokemonRemoteMediatorTest {
         // Execute
         val result = pokemonRemoteMediator.load(LoadType.REFRESH, pagingState)
 
-        // Verify
+        // Verify that the API call was made
         verify(mockApi).getPokemons(any(), any())
 
-        // Assert
+        // Assert that the result indicates an error
         assert(result is RemoteMediator.MediatorResult.Error)
     }
 

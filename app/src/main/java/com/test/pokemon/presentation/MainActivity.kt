@@ -31,23 +31,25 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navController,
                         startDestination = Screen.PokemonListScreen.route
-                    ){
+                    ) {
                         composable(
                             route = Screen.PokemonListScreen.route
-                        ){
+                        ) {
                             PokemonScreen(
                                 navController = navController,
                             )
                         }
                         composable(
                             route = Screen.PokemonDetailScreen.route + "/{pokemonName}"
-                        ){
-                            PokemonDetailScreen()
+                        ) {
+                            PokemonDetailScreen(
+                                back = {
+                                    navController.navigateUp()
+                                }
+                            )
                         }
                     }
                 }
-
-
             }
         }
     }

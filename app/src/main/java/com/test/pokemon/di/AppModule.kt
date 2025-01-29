@@ -54,7 +54,9 @@ object AppModule {
         pokemonApi: PokemonApi
     ): Pager<Int, PokemonEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20),
+            config = PagingConfig(
+                pageSize = 20
+            ),
             remoteMediator = PokemonRemoteMediator(
                 pokemonDb = pokemonDb,
                 pokemonApi = pokemonApi
