@@ -1,6 +1,6 @@
 # Projet Android - [POKEMON]
 
-Ce projet est une application Android développée avec **Kotlin** et utilisant les meilleures pratiques modernes telles que **Hilt**, **Retrofit**, **Jetpack Compose**, et **Clean Architecture**.
+Ce projet est une application Android développée avec **Kotlin** et utilisant les meilleures pratiques modernes telles que **Hilt**, **Retrofit**, **Room**, **Jetpack Compose**, et **Clean Architecture**.
 
 ## Technologies et Outils Utilisés
 
@@ -14,20 +14,17 @@ Ce projet est une application Android développée avec **Kotlin** et utilisant 
 ## Fonctionnalités Principales
 
 ### 1. **Envoi de données à l'API**
-   L'application permet à l'utilisateur d'envoyer des données à l'API, telles que :
-   - **Texte d'un champ de recherche** (par exemple, recherche d'articles ou d'images).
-   - **Données de géolocalisation** pour récupérer des informations spécifiques à un emplacement.
+   L'application permet à l'utilisateur d'envoyer des données à l'API
 
    Ces données sont envoyées via **Retrofit** à l'API pour obtenir des réponses pertinentes.
 
 ### 2. **Affichage des Informations reçues**
    Une fois les données récupérées depuis l'API, l'application affiche :
-   - **Texte** provenant de l'API.
+   - **Une liste de Pokémon** avec des informations de base (id,nom, etc...).
+   - **Pagination** pour charger les Pokémon de manière optimale, en limitant le nombre de Pokémon affichés à la fois.
+   - **Détails de chaque Pokémon** : Lorsqu'un utilisateur clique sur un Pokémon, les informations détaillées (name etc ..) sont affichées.
 
-   L'interface utilisateur est construite avec **Jetpack Compose**, qui offre une expérience fluide et réactive.
-
-### 3. **Pagination**
-   L'application implémente la **pagination** pour les appels API afin d'optimiser l'affichage et réduire la consommation de ressources lors de la récupération de données volumineuses.
+   L'interface utilisateur est construite avec **Jetpack Compose**, et la navigation entre les différents écrans est gérée avec **Navigation Compose**. Les utilisateurs peuvent faire défiler la liste de Pokémon, qui se charge de manière dynamique grâce à la pagination.
 
 ## Architecture du Projet
 
@@ -51,7 +48,5 @@ Ce projet est une application Android développée avec **Kotlin** et utilisant 
 
 ## Tests
 
-Des tests sont écrits pour garantir la stabilité et la fiabilité du code :
-- Tests unitaires pour les **ViewModels** et la logique métier.
-- Tests d'interface utilisateur (UI) pour tester la navigation et l'affichage des données.
+Des tests sont écrits pour garantir la stabilité et la fiabilité du code
 
